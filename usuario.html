@@ -1,139 +1,393 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Panel De Rutinas - FLEXFIT</title>
-  <link href="https://fonts.googleapis.com/css2?family=Caprasimo&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FlexFit — Panel de Usuario</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50:  '#e6f6ff',
+              100: '#ccecff',
+              500: '#0ea5e9',
+              600: '#0284c7',
+              700: '#0369a1',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-  background-color: #111;
-    }
-    body {
-      background-color: transparent;
-      color: #f2f2f2;
-      font-family: 'Poppins', sans-serif;
-      padding: 20px;
-      height: auto;
-      overflow-y: auto;
-    }
-    .lines {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 100%;
-      margin: auto;
-      width: 90vw;
-      display: flex;
-      justify-content: space-between;
-      z-index: -1;
-    }
-    .line {
-      position: relative;
-      width: 1px;
-      height: 100%;
-      overflow: hidden;
-    }
-    .line::after {
-      content: '';
-      display: block;
-      position: absolute;
-      height: 15vh;
-      width: 100%;
-      top: -50%;
-      left: 0;
-      animation: drop 7s infinite cubic-bezier(0.4, 0.26, 0, 0.97);
-    }
-    .line:nth-child(1)::after { background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, #FF4500 75%, #FF4500); animation-delay: 0.5s; }
-    .line:nth-child(2)::after { background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, #32CD32 75%, #32CD32); animation-delay: 1s; }
-    .line:nth-child(3)::after { background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, #1E90FF 75%, #1E90FF); animation-delay: 1.5s; }
-    .line:nth-child(4)::after { background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, #FFD700 75%, #FFD700); animation-delay: 2s; }
-    .line:nth-child(5)::after { background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, #8A2BE2 75%, #8A2BE2); animation-delay: 2.5s; }
-    .line:nth-child(6)::after { background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, #20B2AA 75%, #20B2AA); animation-delay: 3s; }
-    .line:nth-child(7)::after { background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, #DC143C 75%, #DC143C); animation-delay: 3.5s; }
-    .line:nth-child(8)::after { background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, #00FA9A 75%, #00FA9A); animation-delay: 4s; }
-    .line:nth-child(9)::after { background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, #FF1493 75%, #FF1493); animation-delay: 4.5s; }
-    .line:nth-child(10)::after { background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, #00BFFF 75%, #00BFFF); animation-delay: 5s; }
-    @keyframes drop {
-      0% { top: -50%; }
-      100% { top: 110%; }
-    }
-
-    h1 {
-      font-family: 'Caprasimo', cursive;
-      text-align: center;
-      margin-bottom: 20px;
-      color: #00aaff;
-    }
-    .container {
-      max-width: 800px;
-      margin: auto;
-      background-color: #1e2a36;
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-      position: relative;
-      z-index: 1;
-    }
-    .rutina-item {
-      background-color: #2f3e4f;
-      padding: 10px;
-      margin: 10px 0;
-      border-radius: 5px;
-    }
-    .rutina-item h4 {
-      margin: 0 0 5px;
-      color: #00aaff;
-    }
-    .rutina-item p {
-      font-size: 0.95em;
-    }
+    body { font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji"; }
+    /* Sombra suave reutilizable */
+    .card { @apply bg-white/90 backdrop-blur shadow-sm rounded-xl; }
+    .glass  { @apply bg-white/70 backdrop-blur; }
+    /* Scrollbar fino */
+    ::-webkit-scrollbar{width:10px;height:10px}
+    ::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:999px}
+    ::-webkit-scrollbar-track{background:#f1f5f9}
   </style>
 </head>
-<body>
-  <div class="lines">
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-    <div class="line"></div>
-  </div>
+<body class="bg-slate-50 text-slate-800">
 
-  <div class="container">
-    <h1>Panel del Usuario</h1>
-    <div id="rutinasUsuario"></div>
+  <div class="min-h-screen flex">
+    <aside class="w-[250px] shrink-0 bg-slate-900 text-slate-100 sticky top-0 h-screen flex flex-col">
+      <div class="px-5 py-6 flex items-center gap-3 border-b border-white/10">
+        <div class="h-9 w-9 rounded-lg bg-brand-600 grid place-content-center text-white font-bold">F</div>
+        <div>
+          <h1 class="text-lg font-semibold leading-tight">FLEXFIT</h1>
+          <p class="text-xs text-slate-300">Usuario</p>
+        </div>
+      </div>
+
+      <nav class="p-3 flex-1 overflow-y-auto">
+        <a href="#dashboard" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800/70 transition">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-brand-100" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3v18h18M7 13v5m5-9v9m5-13v13"/></svg>
+          <span>Dashboard</span>
+        </a>
+        <a href="#rutinas" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800/70 transition">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-brand-100" viewBox="0 0 24 24" fill="currentColor"><path d="M4 6h16v2H4zM4 11h16v2H4zM4 16h10v2H4z"/></svg>
+          <span>Mis rutinas</span>
+        </a>
+        <a href="#crear" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800/70 transition">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-brand-100" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a1 1 0 0 0-1 1v8H3a1 1 0 0 0 0 2h8v8a1 1 0 0 0 2 0v-8h8a1 1 0 0 0 0-2h-8V3a1 1 0 0 0-1-1z"/></svg>
+          <span>Crear rutinas</span>
+        </a>
+        <a href="#musculos" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800/70 transition">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-brand-100" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5Zm0 2c-5 0-9 2.5-9 5.5V22h18v-2.5C21 16.5 17 14 12 14Z"/></svg>
+          <span>Grupos musculares</span>
+        </a>
+        <a href="#programas" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800/70 transition">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-brand-100" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg>
+          <span>Programas</span>
+        </a>
+      </nav>
+
+      <div class="p-3 mt-auto border-t border-white/10">
+        <button id="btnLogout" class="w-full inline-flex items-center justify-center gap-2 bg-rose-600 hover:bg-rose-700 text-white text-sm font-medium rounded-lg px-4 py-2 transition">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M10 17v-3h4v-4h-4V7l-5 5 5 5Zm3 4h5a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-5v2h5v14h-5v2Z"/></svg>
+          Cerrar sesión
+        </button>
+      </div>
+    </aside>
+
+    <main class="flex-1 min-w-0">
+      <header class="sticky top-0 z-10 bg-white/70 backdrop-blur border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center gap-4">
+          <div class="flex-1">
+            <h2 class="text-xl font-semibold">¡Bienvenido a tu panel, <span id="userName" class="text-brand-600">Atleta</span>! 🏋️</h2>
+            <p class="text-sm text-slate-500">Revisa tus rutinas, explora músculos y sigue tus programas.</p>
+          </div>
+          <div class="relative">
+            <input id="searchInput" type="text" placeholder="Buscar rutina..."
+                       class="w-[260px] rounded-lg border-slate-200 focus:border-brand-500 focus:ring-brand-500 text-sm"/>
+          </div>
+        </div>
+      </header>
+
+      <div class="max-w-7xl mx-auto px-6 py-8 space-y-10">
+
+        <section id="dashboard" class="space-y-6">
+          <div class="card overflow-hidden relative">
+            <div class="absolute inset-0 bg-gradient-to-r from-brand-50 to-transparent"></div>
+            <div class="relative p-6 md:p-8 flex flex-col md:flex-row items-center md:items-start gap-6">
+              <div class="h-16 w-16 rounded-2xl bg-brand-600 text-white grid place-content-center text-2xl font-bold shadow-lg">FF</div>
+              <div class="flex-1">
+                <h3 class="text-2xl font-semibold">Tu progreso comienza aquí</h3>
+                <p class="text-slate-600 mt-1">Mantén el ritmo. Revisa tus rutinas aprobadas y prueba un programa recomendado.</p>
+              </div>
+              <a href="#programas" class="inline-flex items-center gap-2 bg-brand-600 hover:bg-brand-700 text-white rounded-lg px-4 py-2 text-sm transition">
+                Explorar programas
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M13 5l7 7-7 7v-4H4v-6h9V5z"/></svg>
+              </a>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="card p-5 border border-slate-100">
+              <p class="text-sm text-slate-500">Rutinas aprobadas</p>
+              <p id="kpiAprobadas" class="text-3xl font-semibold mt-2">0</p>
+            </div>
+            <div class="card p-5 border border-slate-100">
+              <p class="text-sm text-slate-500">En revisión</p>
+              <p id="kpiRevision" class="text-3xl font-semibold mt-2">0</p>
+            </div>
+            <div class="card p-5 border border-slate-100">
+              <p class="text-sm text-slate-500">Totales creadas</p>
+              <p id="kpiTotales" class="text-3xl font-semibold mt-2">0</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="rutinas" class="space-y-4">
+          <div class="flex items-end justify-between gap-4">
+            <div>
+              <h3 class="text-xl font-semibold">Mis rutinas</h3>
+              <p class="text-sm text-slate-500">Mostrando solo las aprobadas por el administrador.</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <select id="filterSelect" class="rounded-lg text-sm border-slate-200 focus:border-brand-500 focus:ring-brand-500">
+                <option value="all">Todas</option>
+                <option value="corto">Duración: corta</option>
+                <option value="media">Duración: media</option>
+                <option value="larga">Duración: larga</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="rutinasGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+
+          <div id="emptyState" class="hidden card p-10 text-center">
+            <p class="text-slate-600">Aún no tienes rutinas aprobadas. Cuando tu profesional las apruebe, aparecerán aquí.</p>
+          </div>
+        </section>
+        
+        <section id="crear" class="space-y-6">
+          <h3 class="text-xl font-semibold">Crea tu propia rutina</h3>
+          <p class="text-sm text-slate-500">Crea tus propias rutinas. No son visibles para otros usuarios.</p>
+
+          <div class="card p-6 border border-slate-100 space-y-4">
+            <input type="text" id="nombreRutinaUsuario" placeholder="Nombre de la rutina" class="w-full rounded-lg border-slate-200 focus:border-brand-500 focus:ring-brand-500 text-sm">
+            <textarea id="descripcionRutinaUsuario" placeholder="Descripción de la rutina" class="w-full rounded-lg border-slate-200 focus:border-brand-500 focus:ring-brand-500 text-sm"></textarea>
+            <button onclick="crearRutinaUsuario()" class="w-full inline-flex items-center justify-center gap-2 bg-brand-600 hover:bg-brand-700 text-white rounded-lg px-4 py-2 text-sm transition">
+              Guardar rutina
+            </button>
+          </div>
+
+          <div id="misRutinasUsuario" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </section>
+
+        <section id="musculos" class="space-y-6">
+          <h3 class="text-xl font-semibold">Explora por grupo muscular</h3>
+          <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div class="card p-5 hover:shadow-lg transition group">
+              <h4 class="font-semibold mb-2">Pectorales</h4>
+              <div class="aspect-[16/10] grid place-content-center rounded-lg bg-gradient-to-br from-sky-50 to-white border">
+                <img alt="Pectorales" class="opacity-80 group-hover:opacity-100 transition" src="https://cdn.svgporn.com/logos/muscle.svg" onerror="this.style.display='none'">
+                <p class="text-slate-500 text-sm">Ideas: press banca, flexiones, aperturas.</p>
+              </div>
+            </div>
+            <div class="card p-5 hover:shadow-lg transition group">
+              <h4 class="font-semibold mb-2">Espalda</h4>
+              <div class="aspect-[16/10] grid place-content-center rounded-lg bg-gradient-to-br from-emerald-50 to-white border">
+                <p class="text-slate-500 text-sm">Dominadas, remo con barra, jalón al pecho.</p>
+              </div>
+            </div>
+            <div class="card p-5 hover:shadow-lg transition group">
+              <h4 class="font-semibold mb-2">Piernas</h4>
+              <div class="aspect-[16/10] grid place-content-center rounded-lg bg-gradient-to-br from-amber-50 to-white border">
+                <p class="text-slate-500 text-sm">Sentadillas, prensa, zancadas, peso muerto.</p>
+              </div>
+            </div>
+            <div class="card p-5 hover:shadow-lg transition group">
+              <h4 class="font-semibold mb-2">Hombros</h4>
+              <div class="aspect-[16/10] grid place-content-center rounded-lg bg-gradient-to-br from-fuchsia-50 to-white border">
+                <p class="text-slate-500 text-sm">Press militar, elevaciones laterales.</p>
+              </div>
+            </div>
+            <div class="card p-5 hover:shadow-lg transition group">
+              <h4 class="font-semibold mb-2">Bíceps</h4>
+              <div class="aspect-[16/10] grid place-content-center rounded-lg bg-gradient-to-br from-indigo-50 to-white border">
+                <p class="text-slate-500 text-sm">Curl barra, curl mancuernas, martillo.</p>
+              </div>
+            </div>
+            <div class="card p-5 hover:shadow-lg transition group">
+              <h4 class="font-semibold mb-2">Tríceps</h4>
+              <div class="aspect-[16/10] grid place-content-center rounded-lg bg-gradient-to-br from-rose-50 to-white border">
+                <p class="text-slate-500 text-sm">Fondos, press cerrado, jalón cuerda.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="programas" class="space-y-6">
+          <div class="flex items-end justify-between">
+            <h3 class="text-xl font-semibold">Programas recomendados</h3>
+            <a href="#rutinas" class="text-brand-700 hover:underline text-sm">Ver mis rutinas</a>
+          </div>
+
+          <div class="grid gap-6 lg:grid-cols-2">
+            <article class="card p-6 border border-slate-100 flex flex-col md:flex-row gap-6">
+              <img alt="Programa fuerza" class="w-full md:w-56 aspect-[3/4] object-cover rounded-lg"
+                      src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=800&auto=format&fit=crop">
+              <div class="flex-1">
+                <h4 class="text-lg font-semibold">Fuerza y Potencia · 12 semanas</h4>
+                <p class="text-slate-600 text-sm mt-1">Plan progresivo para mejorar tu RM en sentadilla, banca y peso muerto.</p>
+                <div class="mt-4 flex items-center gap-2 text-xs">
+                  <span class="px-2 py-1 rounded-full bg-slate-100">Intermedio</span>
+                  <span class="px-2 py-1 rounded-full bg-slate-100">3-4 días/sem</span>
+                </div>
+                <a href="fuerzaplan1.pdf" download
+   class="mt-5 inline-flex items-center gap-2 bg-brand-600 hover:bg-brand-700 text-white rounded-lg px-4 py-2 text-sm transition">
+  Descargar plan
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M11 3h2v8h3l-4 4-4-4h3V3zM5 19h14v2H5z"/>
+  </svg>
+</a>
+              </div>
+            </article>
+
+            <article class="card p-6 border border-slate-100 flex flex-col md:flex-row gap-6">
+              <img alt="Programa definición" class="w-full md:w-56 aspect-[3/4] object-cover rounded-lg"
+                      src="https://fitgeneration.es/wp-content/uploads/2024/06/etapa-de-definicion-1.png">
+              <div class="flex-1">
+                <h4 class="text-lg font-semibold">Definición y Resistencia · 8 semanas</h4>
+                <p class="text-slate-600 text-sm mt-1">Circuitos, HIIT y fuerza metabólica para bajar % de grasa.</p>
+                <div class="mt-4 flex items-center gap-2 text-xs">
+                  <span class="px-2 py-1 rounded-full bg-slate-100">Todos</span>
+                  <span class="px-2 py-1 rounded-full bg-slate-100">3 días/sem</span>
+                </div>
+                <button class="mt-5 inline-flex items-center gap-2 bg-brand-600 hover:bg-brand-700 text-white rounded-lg px-4 py-2 text-sm transition">
+                  Descargar plan
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M11 3h2v8h3l-4 4-4-4h3V3zM5 19h14v2H5z"/></svg>
+                </button>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <footer class="py-10 text-center text-sm text-slate-500">
+          © <span id="year"></span> FLEXFIT — Hecho con 💙 para tu progreso.
+        </footer>
+
+      </div>
+    </main>
   </div>
 
   <script>
-    const rutinas = JSON.parse(localStorage.getItem("rutinasFlexfit")) || [];
+    // Simular nombre (puedes setearlo desde login)
+    const savedName = localStorage.getItem('ff_user_name') || 'Atleta';
+    document.getElementById('userName').textContent = savedName;
 
-    function mostrarRutinas() {
-      const contenedor = document.getElementById("rutinasUsuario");
-      contenedor.innerHTML = "<h2>Rutinas Aprobadas</h2>";
-      const aprobadas = rutinas.filter(r => r.aprobada);
-      aprobadas.forEach(r => {
-        contenedor.innerHTML += `
-          <div class="rutina-item">
-            <h4>${r.nombre}</h4>
-            <p>${r.descripcion}</p>
+    // Fuente de datos: rutinasFlexfit (como está hoy)
+    // Estructura esperada: { nombre, descripcion, aprobada: boolean, duracion?: 'corto'|'media'|'larga' }
+    const rutinas = JSON.parse(localStorage.getItem('rutinasFlexfit') || '[]');
+    let rutinasUsuario = JSON.parse(localStorage.getItem("rutinasUsuario") || "[]");
+
+    // KPIs
+    const totales   = rutinas.length + rutinasUsuario.length;
+    const aprobadas = rutinas.filter(r => r.aprobada).length;
+    const revision  = rutinas.filter(r => !r.aprobada).length;
+
+    document.getElementById('kpiTotales').textContent  = totales;
+    document.getElementById('kpiAprobadas').textContent = aprobadas;
+    document.getElementById('kpiRevision').textContent  = revision;
+
+    // Render rutinas aprobadas
+    const grid = document.getElementById('rutinasGrid');
+    const empty = document.getElementById('emptyState');
+    const searchInput = document.getElementById('searchInput');
+    const filterSelect = document.getElementById('filterSelect');
+
+    function cardHTML(r, idx){
+      // etiqueta de duración
+      const dur = r.duracion || 'media';
+      const tag = dur === 'corto' ? 'bg-emerald-50 text-emerald-700'
+                  : dur === 'larga' ? 'bg-indigo-50 text-indigo-700'
+                  : 'bg-amber-50 text-amber-700';
+
+      return `
+      <article class="card border border-slate-100 overflow-hidden hover:shadow-lg transition">
+        <div class="p-5">
+          <div class="flex items-start justify-between gap-3">
+            <h4 class="font-semibold text-slate-800">${r.nombre}</h4>
+            <span class="px-2 py-0.5 text-[11px] rounded-full ${tag} capitalize">${dur}</span>
           </div>
-        `;
-      });
+          <p class="text-sm text-slate-600 mt-2">${r.descripcion}</p>
+          <div class="mt-4 flex items-center justify-between">
+            <span class="text-xs text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">Aprobada</span>
+            <button onclick="verDetalle(${idx})"
+              class="text-sm text-brand-700 hover:text-brand-900 hover:underline">Ver detalle</button>
+          </div>
+        </div>
+      </article>`;
     }
 
-    mostrarRutinas();
+    function render(){
+      const q = (searchInput.value || '').toLowerCase().trim();
+      const f = filterSelect.value;
+
+      const items = rutinas
+        .map((r,i)=>({...r,_i:i}))
+        .filter(r => r.aprobada)
+        .filter(r => !q || r.nombre.toLowerCase().includes(q) || r.descripcion.toLowerCase().includes(q))
+        .filter(r => f==='all' ? true : (r.duracion||'media')===f);
+
+      grid.innerHTML = items.map(r => cardHTML(r, r._i)).join('');
+      empty.classList.toggle('hidden', items.length>0);
+    }
+
+    function verDetalle(idx){
+      const r = rutinas[idx];
+      if(!r) return;
+      const msg = `Nombre: ${r.nombre}\nDuración: ${r.duracion||'media'}\n\nDescripción:\n${r.descripcion}`;
+      alert(msg);
+    }
+
+    searchInput.addEventListener('input', render);
+    filterSelect.addEventListener('change', render);
+    render();
+
+    // Crear rutina propia
+    function crearRutinaUsuario(){
+      const nombre = document.getElementById("nombreRutinaUsuario").value.trim();
+      const descripcion = document.getElementById("descripcionRutinaUsuario").value.trim();
+      if(nombre && descripcion){
+        rutinasUsuario.push({ nombre, descripcion });
+        localStorage.setItem("rutinasUsuario", JSON.stringify(rutinasUsuario));
+        mostrarRutinasUsuario();
+        // Limpiar campos
+        document.getElementById("nombreRutinaUsuario").value = "";
+        document.getElementById("descripcionRutinaUsuario").value = "";
+      } else {
+        alert("Completa todos los campos");
+      }
+    }
+
+    // Render rutinas propias
+    function mostrarRutinasUsuario(){
+      const grid = document.getElementById("misRutinasUsuario");
+      if(rutinasUsuario.length===0){
+        grid.innerHTML = "<p class='col-span-full text-center text-slate-500'>No has creado rutinas todavía.</p>";
+      } else {
+        grid.innerHTML = rutinasUsuario.map((r,i)=>`
+          <div class="card p-5 border border-slate-100 hover:shadow-lg transition">
+            <h4 class="font-semibold">${r.nombre}</h4>
+            <p class="text-sm text-slate-600 mt-1">${r.descripcion}</p>
+            <div class="mt-3 flex items-center justify-between">
+              <span class="text-xs text-amber-700 bg-amber-50 px-2 py-0.5 rounded">Personalizada</span>
+              <button onclick="eliminarRutinaUsuario(${i})" class="text-xs text-rose-600 hover:underline">Eliminar</button>
+            </div>
+          </div>`).join('');
+      }
+    }
+
+    function eliminarRutinaUsuario(i){
+      rutinasUsuario.splice(i,1);
+      localStorage.setItem("rutinasUsuario", JSON.stringify(rutinasUsuario));
+      mostrarRutinasUsuario();
+    }
+
+    // Inicialización
+    mostrarRutinasUsuario();
+
+    // Logout simple (igual que admin/profesional)
+    document.getElementById('btnLogout').addEventListener('click', ()=>{
+      localStorage.removeItem('ff_logged_in'); // o la clave que uses
+      // window.location.href = 'index.html';
+      alert('Sesión cerrada. (Redirige al inicio si ya lo tienes configurado)');
+    });
+
+    // Año footer
+    document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
