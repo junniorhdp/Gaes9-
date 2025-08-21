@@ -380,11 +380,16 @@
     mostrarRutinasUsuario();
 
     // Logout simple (igual que admin/profesional)
-    document.getElementById('btnLogout').addEventListener('click', ()=>{
-      localStorage.removeItem('ff_logged_in'); // o la clave que uses
-      // window.location.href = 'index.html';
-      alert('Sesión cerrada. (Redirige al inicio si ya lo tienes configurado)');
-    });
+    // Logout funcional
+document.getElementById('btnLogout').addEventListener('click', ()=>{
+  // Elimina cualquier dato de sesión
+  localStorage.removeItem('ff_logged_in');
+  localStorage.removeItem('ff_user_name');
+
+  // Redirige al login o página principal
+  window.location.href = "index.html"; // cámbialo si tu login tiene otro nombre
+});
+
 
     // Año footer
     document.getElementById('year').textContent = new Date().getFullYear();
